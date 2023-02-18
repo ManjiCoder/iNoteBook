@@ -1,14 +1,18 @@
 /* eslint-disable quotes */
 const mongoose = require("mongoose");
 
-const mongoURL = "mongodb://localhost:27017";
+/* USE ==> "mongodb://127.0.0.1:27017"  NOT !== "mongodb://localhost:27017" */
+const mongoURL = "mongodb://127.0.0.1:27017";
 
 const connectToMongo = () => {
-  console.time("connetingTime");
-  mongoose.connect(mongoURL, () => {
-    console.log("Connected to the MongoDB Successfully.");
-  });
-  console.timeEnd("connetingTime");
+  mongoose
+    .connect(mongoURL)
+    .then(() => {
+      console.log("Connected to the MongoDB Successfully.");
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 module.exports = connectToMongo;
