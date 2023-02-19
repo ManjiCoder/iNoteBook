@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 /* USE ==> "mongodb://127.0.0.1:27017"  NOT !== "mongodb://localhost:27017" */
-const mongoURL = "mongodb://127.0.0.1:27017";
+const mongoURL = "mongodb://127.0.0.1:27017/iNotebook";
 
 const connectToMongo = () => {
   mongoose
