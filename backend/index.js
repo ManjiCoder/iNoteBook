@@ -12,7 +12,7 @@ connectToMongo();
 app.use(express.json());
 
 // Available Routes
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api", require("./routes/auth"));
 app.use("/api/notes", require("./routes/user"));
 
 app.listen(port, () => {

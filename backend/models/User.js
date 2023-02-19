@@ -18,11 +18,10 @@ const UserSchema = new Schema({
     required: true,
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now,
   },
 });
 
 const user = mongoose.model("user", UserSchema);
-user.createIndexes();
 module.exports = user;
