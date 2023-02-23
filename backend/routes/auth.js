@@ -60,15 +60,59 @@ router.post(
       res.json({ authToken });
     } catch (err) {
       console.log(err.message);
-      res.status(500).json({
-        error: "Some error occured",
-        message: err.message,
-      });
+      res.status(500).send("Internal Server Error");
     }
     // eslint-disable-next-line comma-dangle
   }
 );
 
+// Login a User using: POST => "/api/login". login required
+router.post(
+  "/login",
+  [
+    body("email", "Enter a valid email").isEmail(),
+    body("password", "Password cannot be blank").exists(),
+  ],
+  // eslint-disable-next-line consistent-return
+  async (req, res) => {
+    // If there are errors, return Bad request & the errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { email, password } = req.body;
+    try {
+      // To check whether User with this email exists
+      let newUser = await User.findOne({ email });
+      // console.log(newUser);
+      if (!newUser) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials" });
+      }
+      // To compare user password with hash password
+      const comparePassword = await bcrypt.compare(password, newUser.password); // => return boolean
+      if (!comparePassword) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials" });
+      }
+      // Creating AuthToken Using jsonwebtoken
+      const data = {
+        user: {
+          id: newUser.id,
+        },
+      };
+      const authToken = jwt.sign(data, JWT_SECRET);
+      console.log({ data, authToken });
+      res.json({ authToken });
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send("Internal Server Error");
+    }
+    // eslint-disable-next-line comma-dangle
+  }
+);
 module.exports = router;
 
 // Side Note
