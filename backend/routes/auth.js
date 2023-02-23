@@ -6,7 +6,6 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const user = require("../models/User");
 
 const JWT_SECRET = "Manji_The_Mountain_Man-21";
 const router = express.Router();
@@ -49,6 +48,7 @@ router.post(
       });
       // const newUser = await User(req.body).save();
       console.log("User saved to the MongoDB Successfully.");
+      // Creating AuthToken Using jsonwebtoken
       const data = {
         user: {
           id: newUser.id,
@@ -76,4 +76,5 @@ module.exports = router;
   PROBLEM: Duplicate email exist ho raha hai tho test db me problem h
   ANSWERS: fintOne use Karo
   TODO:  Indexs kya h ?
+  ANSWER: not use unique:true in model issue solve.
 */
