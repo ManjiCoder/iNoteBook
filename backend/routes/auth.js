@@ -67,7 +67,7 @@ router.post(
   }
 );
 
-// ROUTE 2: Authenticate a User using: POST => "/api/login". login required
+// ROUTE 2: Authenticate a User using: POST => "/api/login". Login required
 router.post(
   "/login",
   [
@@ -115,7 +115,7 @@ router.post(
   }
 );
 
-// ROUTE 3: Get User Detail using: POST => "/api/getuser". login required
+// ROUTE 3: Get User Detail using: POST => "/api/getuser". Login required
 router.post("/getuser", fetchuser, async (req, res) => {
   // Getting user id from request header from middleware
   const userId = req.user.id;
