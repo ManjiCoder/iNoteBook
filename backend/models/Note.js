@@ -4,6 +4,11 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const NotesSchema = new Schema({
+  // Like Foreign Key => To prevent user to access notes of other users
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
   title: {
     type: String,
     required: true,
@@ -17,7 +22,7 @@ const NotesSchema = new Schema({
     default: "General",
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now,
   },
 });

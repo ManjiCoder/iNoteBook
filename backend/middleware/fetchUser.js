@@ -15,7 +15,7 @@ const fetchuser = (req, res, next) => {
     //   If token is present & valid
     const data = jwt.verify(token, JWT_SECRET);
     req.user = data.user;
-    console.log(data.user);
+    // console.log(data.user);
     next();
   } catch (err) {
     //   If token is present & invalid
