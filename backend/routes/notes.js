@@ -148,7 +148,8 @@ router.delete("/deleteallnotes", fetchuser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-// ROUTE 4: Delete all Note of User using: PUT => "/api/notes/deleteallnotes". Login required
+
+// ROUTE 4: Update all Note of User using: PUT => "/api/notes/updateallnotes". Login required
 router.put("/updateallnotes", fetchuser, async (req, res) => {
   try {
     const { title, description, tag } = req.body;

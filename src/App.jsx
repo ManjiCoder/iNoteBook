@@ -1,6 +1,8 @@
 function App() {
   return (
-    <div>App</div>
+    <div>
+      <h2>iNotebook</h2>
+    </div>
   );
 }
 
