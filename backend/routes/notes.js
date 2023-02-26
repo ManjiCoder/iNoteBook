@@ -148,5 +148,39 @@ router.delete("/deleteallnotes", fetchuser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+// ROUTE 4: Delete all Note of User using: PUT => "/api/notes/deleteallnotes". Login required
+router.put("/updateallnotes", fetchuser, async (req, res) => {
+  try {
+    const { title, description, tag } = req.body;
+    // if title,description,tag any field is present inside the body will be stored in newNotes Obj
+    const newNote = {};
+    if (title) newNote.title = title;
+    if (description) newNote.description = description;
+    if (tag) newNote.tag = tag;
+
+    // if body is empty
+    if (!title && !description && !tag) {
+      return res.json({
+        error: "Specifield the field that you want to update",
+      });
+    }
+    const deleteNote = await Note.updateMany(
+      { user: req.user.id },
+      {
+        $set: {
+          title: newNote.title,
+          description: newNote.description,
+          tag: newNote.tag,
+          login: true,
+        },
+      },
+      { new: true }
+    );
+    res.json({ msg: "Note has been update successfully", deleteNote });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 module.exports = router;
