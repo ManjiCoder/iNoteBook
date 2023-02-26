@@ -1,5 +1,6 @@
-/* eslint-disable comma-dangle */
 /* eslint-disable quotes */
+/* eslint-disable consistent-return */
+/* eslint-disable comma-dangle */
 const express = require("express");
 const { body, validationResult } = require("express-validator");
 const fetchuser = require("../middleware/fetchUser");
@@ -30,7 +31,6 @@ router.post(
     body("tag", "Tag cannot be blank").exists(),
   ],
   fetchuser,
-  // eslint-disable-next-line consistent-return
   async (req, res) => {
     // If there are errors, return Bad request & the errors
     const errors = validationResult(req);
@@ -69,7 +69,6 @@ router.put(
     body("tag", "Tag cannot be blank").exists(),
   ],
   fetchuser,
-  // eslint-disable-next-line consistent-return
   async (req, res) => {
     // If there are errors, return Bad request & the errors
     const errors = validationResult(req);
@@ -90,7 +89,9 @@ router.put(
       // Find the note to be update & update it
       const checkNote = await Note.findById(req.params.id);
 
+      // if req.params.id is not valid
       if (!checkNote) return res.status(404).send("Not Found");
+      // if login user.id & the note that is to be update user.id is not same
       if (checkNote.user.toString() !== req.user.id) {
         return res.status(401).send("Not Allowed");
       }
@@ -101,12 +102,51 @@ router.put(
         { $set: newNote },
         { new: true }
       );
-      res.json(updateNote);
+      res.json({ msg: "Note has been updated successfully", updateNote });
     } catch (err) {
+      if (
+        // eslint-disable-next-line operator-linebreak
+        err.message ===
+        `Cast to ObjectId failed for value "${req.params.id}" (type string) at path "_id" for model "notes"`
+      ) {
+        return res.status(404).send("Not Found");
+      }
       console.log(err.message);
       res.status(500).send("Internal Server Error");
     }
   }
 );
+
+// ROUTE 4: Delete an existing Note of User using: DELETE => "/api/notes/deletenote". Login required
+router.delete("/deletenote/:id", fetchuser, async (req, res) => {
+  try {
+    // Find the note to be delete & delete it
+    const checkNote = await Note.findById(req.params.id);
+    // if req.params.id is not valid
+    if (!checkNote) return res.status(404).send("Not Found");
+    // Allow deletion only if user owns this checkNote
+    // if login user.id & the note that is to be delete user.id is not same
+    if (checkNote.user.toString() !== req.user.id) {
+      return res.status(401).send("Not Allowed");
+    }
+
+    const deleteNote = await Note.findByIdAndDelete(req.params.id);
+    res.json({ msg: "Note has been delete successfully", deleteNote });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// ROUTE 4: Delete all Note of User using: DELETE => "/api/notes/deleteallnotes". Login required
+router.delete("/deleteallnotes", fetchuser, async (req, res) => {
+  try {
+    const deleteNote = await Note.deleteMany({ user: req.user.id });
+    res.json({ msg: "Note has been delete successfully", deleteNote });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 module.exports = router;
