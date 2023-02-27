@@ -1,8 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Notes from '../components/Notes';
+import NoteContext from '../context/notes/NoteContext';
 
 function Home() {
+  const { showAlert } = useContext(NoteContext);
+  useEffect(() => {
+    showAlert('primary', 'Loaded');
+  }, []);
+
   return (
     <div className="my-3">
       <h1>Add a Note</h1>

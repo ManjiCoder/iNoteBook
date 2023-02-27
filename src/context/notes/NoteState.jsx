@@ -53,9 +53,19 @@ function NoteState(props) {
     },
   ];
   const [notes, setNotes] = useState(noteInitial);
+  const [Alert, setAlert] = useState(null);
+  const showAlert = (type, msg) => {
+    setAlert({ type, msg });
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  };
   return (
     // eslint-disable-next-line react/self-closing-comp
-    <NoteContext.Provider value={{ notes, setNotes }}>
+    <NoteContext.Provider value={{
+      notes, setNotes, Alert, showAlert,
+    }}
+    >
       {props.children}
     </NoteContext.Provider>
   );
