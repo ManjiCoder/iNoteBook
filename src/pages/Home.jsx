@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext } from 'react';
-import NoteContext from '../context/notes/NoteContext';
+import React from 'react';
+import Notes from '../components/Notes';
 
 function Home() {
-  const context = useContext(NoteContext);
-  const { notes, setNotes } = context;
-
   return (
     <div className="my-3">
       <h1>Add a Note</h1>
@@ -25,8 +22,7 @@ function Home() {
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
-      <h1>Your Notes</h1>
-      {notes.map((note) => (<h6>{note.title}</h6>))}
+      <Notes />
     </div>
   );
 }
