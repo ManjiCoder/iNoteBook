@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import Alert from './components/Alert';
 import Navbar from './components/Navbar';
 import NoteState from './context/notes/NoteState';
 import About from './pages/About';
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <NoteState>
         <Navbar />
+        <Alert message="This is amazing React Course" />
         <div className="container">
           <Routes>
             <Route exact path="/" element={<Home />} />

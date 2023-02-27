@@ -1,3 +1,13 @@
-.showLink {
-    color: red !important;
+.icons {
+    cursor: pointer;
+    font-size: large;
+    place-self: end;
+}
+
+.icons:nth-child(1) {
+    color: red;
+}
+
+.icons:nth-child(2) {
+    color: blue;
 }
