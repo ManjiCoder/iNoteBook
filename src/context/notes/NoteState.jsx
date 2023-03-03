@@ -64,6 +64,7 @@ function NoteState(props) {
   // Add a Note
   const addNote = (title, description, tag) => {
     // TODO: API Call
+    console.log('Note add successfully');
     const note = {
       _id: '63fb464f67e7ef9ac51d3c91',
       user: '63f7c39ca28e0c788c0bbabc',
@@ -77,8 +78,12 @@ function NoteState(props) {
   };
 
   // Delete a Note
-  const deleteNote = () => {
+  const deleteNote = (id) => {
     // TODO: API Call
+    console.log(`delete note ${id}`);
+    // eslint-disable-next-line no-underscore-dangle
+    const filterNote = notes.filter((note) => (note._id !== id));
+    setNotes(filterNote);
   };
 
   // Add a Note

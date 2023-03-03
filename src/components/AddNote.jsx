@@ -58,7 +58,7 @@ function AddNote() {
             onChange={handleOnChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleOnSubmit}>Submit</button>
+        <button type="submit" className="btn btn-primary" onClick={handleOnSubmit}>Add Note</button>
       </form>
     </>
   );
