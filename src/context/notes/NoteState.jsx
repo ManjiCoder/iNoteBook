@@ -60,10 +60,35 @@ function NoteState(props) {
       setAlert(null);
     }, 2000);
   };
+
+  // Add a Note
+  const addNote = (title, description, tag) => {
+    // TODO: API Call
+    const note = {
+      _id: '63fb464f67e7ef9ac51d3c91',
+      user: '63f7c39ca28e0c788c0bbabc',
+      title,
+      description,
+      tag,
+      date: '2023-02-26T11:45:19.158Z',
+      __v: 0,
+    };
+    setNotes(notes.concat(note));
+  };
+
+  // Delete a Note
+  const deleteNote = () => {
+    // TODO: API Call
+  };
+
+  // Add a Note
+  const editNote = () => {
+    // TODO: API Call
+  };
   return (
     // eslint-disable-next-line react/self-closing-comp
     <NoteContext.Provider value={{
-      notes, setNotes, Alert, showAlert,
+      notes, setNotes, Alert, showAlert, addNote, deleteNote, editNote,
     }}
     >
       {props.children}
