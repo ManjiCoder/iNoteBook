@@ -5,53 +5,8 @@ import React, { useState } from 'react';
 import NoteContext from './NoteContext';
 
 function NoteState(props) {
-  const noteInitial = [
-    {
-      _id: '63fb464f67e7ef9ac51d3c91',
-      user: '63f7c39ca28e0c788c0bbabc',
-      title: 'Self Improvment',
-      description: 'Early to bed, Early to rise',
-      tag: 'personal',
-      date: '2023-02-26T11:45:19.158Z',
-      __v: 0,
-    },
-    {
-      _id: '63fb464f67e7ef9ac51d3c93',
-      user: '63f7c39ca28e0c788c0bbabc',
-      title: 'Self Improvment',
-      description: 'Early to bed, Early to rise',
-      tag: 'personal',
-      date: '2023-02-26T11:45:19.534Z',
-      __v: 0,
-    },
-    {
-      _id: '63fb464f67e7ef9ac51d3c95',
-      user: '63f7c39ca28e0c788c0bbabc',
-      title: 'Self Improvment',
-      description: 'Early to bed, Early to rise',
-      tag: 'personal',
-      date: '2023-02-26T11:45:19.978Z',
-      __v: 0,
-    },
-    {
-      _id: '63fb465067e7ef9ac51d3c97',
-      user: '63f7c39ca28e0c788c0bbabc',
-      title: 'Self Improvment',
-      description: 'Early to bed, Early to rise',
-      tag: 'personal',
-      date: '2023-02-26T11:45:20.410Z',
-      __v: 0,
-    },
-    {
-      _id: '63fcfa66522af85ced6ab6a7',
-      user: '63f7c39ca28e0c788c0bbabc',
-      title: 'Mytitle',
-      description: 'Early to bed, Early to rise',
-      tag: 'personal',
-      date: '2023-02-27T18:45:58.445Z',
-      __v: 0,
-    },
-  ];
+  const host = 'http://localhost:5000';
+  const noteInitial = [];
   const [notes, setNotes] = useState(noteInitial);
   const [Alert, setAlert] = useState(null);
   const showAlert = (type, msg) => {
@@ -61,20 +16,44 @@ function NoteState(props) {
     }, 2000);
   };
 
+  // Get Notes
+  const getNotes = async () => {
+    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNmN2MzOWNhMjhlMGM3ODhjMGJiYWJjIn0sImlhdCI6MTY3NzI0NDU0MX0.G2u7ps24NDaSdq2KatF9zmxsqRcODhf-4n2nxUTtpbs',
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    setNotes(json);
+  };
+
   // Add a Note
-  const addNote = (title, description, tag) => {
-    // TODO: API Call
-    console.log('Note add successfully');
-    const note = {
-      _id: '63fb464f67e7ef9ac51d3c91',
-      user: '63f7c39ca28e0c788c0bbabc',
-      title,
-      description,
-      tag,
-      date: '2023-02-26T11:45:19.158Z',
-      __v: 0,
-    };
-    setNotes(notes.concat(note));
+  const addNote = async (title, description, tag) => {
+    // API Call
+    const response = await fetch(`${host}/api/notes/addnote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNmN2MzOWNhMjhlMGM3ODhjMGJiYWJjIn0sImlhdCI6MTY3NzI0NDU0MX0.G2u7ps24NDaSdq2KatF9zmxsqRcODhf-4n2nxUTtpbs',
+      },
+      body: JSON.stringify({ title, description, tag }),
+    });
+    const json = await response.json();
+    console.log(json);
+    // console.log('Note add successfully');
+    // const note = {
+    //   _id: '63fb464f67e7ef9ac51d3c91',
+    //   user: '63f7c39ca28e0c788c0bbabc',
+    //   title,
+    //   description,
+    //   tag,
+    //   date: '2023-02-26T11:45:19.158Z',
+    //   __v: 0,
+    // };
+    setNotes(notes.concat(json.saveNote));
   };
 
   // Delete a Note
@@ -87,13 +66,32 @@ function NoteState(props) {
   };
 
   // Add a Note
-  const editNote = () => {
-    // TODO: API Call
+  const editNote = async (id, title, description, tag) => {
+    // API Call
+    const response = await fetch(`${host}/api/notes/updatenote/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNmN2MzOWNhMjhlMGM3ODhjMGJiYWJjIn0sImlhdCI6MTY3NzI0NDU0MX0.G2u7ps24NDaSdq2KatF9zmxsqRcODhf-4n2nxUTtpbs',
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    // eslint-disable-next-line no-plusplus
+    for (let index = 0; index < notes.length; index++) {
+      const element = notes[index];
+      // eslint-disable-next-line no-underscore-dangle
+      if (element._id === id) {
+        element.title = title;
+        element.description = description;
+        element.tag = tag;
+      }
+    }
   };
   return (
     // eslint-disable-next-line react/self-closing-comp
     <NoteContext.Provider value={{
-      notes, setNotes, Alert, showAlert, addNote, deleteNote, editNote,
+      notes, setNotes, Alert, showAlert, getNotes, addNote, editNote, deleteNote,
     }}
     >
       {props.children}

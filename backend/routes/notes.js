@@ -50,7 +50,7 @@ router.post(
       // Saving Note to db
       const saveNote = await newNote.save();
       console.log("User saved to the MongoDB Successfully.");
-      res.json(saveNote);
+      res.json({ msg: "Note has been added successfully", saveNote });
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Internal Server Error");
