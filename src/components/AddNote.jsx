@@ -35,6 +35,8 @@ function AddNote() {
             placeholder="Enter the title..."
             onChange={handleOnChange}
             value={note.title}
+            min="5"
+            required
           />
         </div>
         <div className="mb-3">
@@ -47,6 +49,8 @@ function AddNote() {
             placeholder="Enter the Description..."
             onChange={handleOnChange}
             value={note.description}
+            min="5"
+            required
           />
         </div>
         <div className="mb-3">
@@ -59,9 +63,10 @@ function AddNote() {
             placeholder="Enter the Tag..."
             value={note.tag}
             onChange={handleOnChange}
+            required
           />
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleOnSubmit}>Add Note</button>
+        <button disabled={(note.title.length && note.description.length) < 5} type="submit" className="btn btn-primary" onClick={handleOnSubmit}>Add Note</button>
       </form>
     </>
   );

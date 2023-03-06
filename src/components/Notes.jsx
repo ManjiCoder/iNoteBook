@@ -99,6 +99,9 @@ function Notes() {
       </div>
       <div className="row">
         <h1>Your Notes</h1>
+        <div className="container mx-2">
+          {notes.length === 0 && 'No notes to display'}
+        </div>
         {
           // eslint-disable-next-line no-shadow
           notes.map((note) => (<NoteItem key={note._id} note={note} updateNote={updateNote} />))
