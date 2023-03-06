@@ -10,7 +10,7 @@ function AddNote() {
   const [note, setNote] = useState({
     title: '',
     description: '',
-    tag: 'General',
+    tag: '',
   });
   // eslint-disable-next-line no-undef
   const handleOnChange = (e) => {
@@ -19,6 +19,7 @@ function AddNote() {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
+    setNote({ title: '', description: '', tag: '' });
   };
   return (
     <>
@@ -33,6 +34,7 @@ function AddNote() {
             name="title"
             placeholder="Enter the title..."
             onChange={handleOnChange}
+            value={note.title}
           />
         </div>
         <div className="mb-3">
@@ -44,6 +46,7 @@ function AddNote() {
             name="description"
             placeholder="Enter the Description..."
             onChange={handleOnChange}
+            value={note.description}
           />
         </div>
         <div className="mb-3">

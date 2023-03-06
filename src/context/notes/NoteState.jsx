@@ -69,25 +69,32 @@ function NoteState(props) {
   // Add a Note
   const editNote = async (id, title, description, tag) => {
     // API Call
-    const response = await fetch(`${host}/api/notes/updatenote/`, {
+    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNmN2MzOWNhMjhlMGM3ODhjMGJiYWJjIn0sImlhdCI6MTY3NzI0NDU0MX0.G2u7ps24NDaSdq2KatF9zmxsqRcODhf-4n2nxUTtpbs',
       },
+      body: JSON.stringify({ title, description, tag }),
     });
     const json = await response.json();
     console.log(json);
+    showAlert('primary', json.msg);
+
+    // To filter the edit note id and make new notes arr
+    const newNotes = JSON.parse(JSON.stringify(notes));
     // eslint-disable-next-line no-plusplus
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+    for (let index = 0; index < newNotes.length; index++) {
+      const element = newNotes[index];
       // eslint-disable-next-line no-underscore-dangle
       if (element._id === id) {
         element.title = title;
         element.description = description;
         element.tag = tag;
+        break;
       }
     }
+    setNotes(newNotes);
   };
   return (
     // eslint-disable-next-line react/self-closing-comp

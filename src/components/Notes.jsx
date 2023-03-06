@@ -16,9 +16,7 @@ function Notes() {
   }, []);
   //   Later move this to NoteState
   const [note, setNote] = useState({
-    etitle: '',
-    edescription: '',
-    etag: 'General',
+    id: '', etitle: '', edescription: '', etag: 'General',
   });
     // eslint-disable-next-line no-undef
   const handleOnChange = (e) => {
@@ -26,12 +24,12 @@ function Notes() {
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    editNote(note._id, note.etitle, note.edescription, note.etag);
+    editNote(note.id, note.etitle, note.edescription, note.etag);
   };
   const updateNote = (currentNote) => {
     console.log(currentNote);
     setNote({
-      etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag,
+      id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag,
     });
 
     ref.current.click();
@@ -94,14 +92,17 @@ function Notes() {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={handleOnSubmit}>Save Note</button>
+              <button type="button" className="btn btn-primary" disabled={(note.etitle.length || note.edescription.length) < 5} data-bs-dismiss="modal" onClick={handleOnSubmit}>Save Note</button>
             </div>
           </div>
         </div>
       </div>
       <div className="row">
         <h1>Your Notes</h1>
-        {notes.map((note) => (<NoteItem key={note._id} note={note} updateNote={updateNote} />))}
+        {
+          // eslint-disable-next-line no-shadow
+          notes.map((note) => (<NoteItem key={note._id} note={note} updateNote={updateNote} />))
+        }
       </div>
     </>
   );
