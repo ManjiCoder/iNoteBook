@@ -43,26 +43,27 @@ function NoteState(props) {
     });
     const json = await response.json();
     console.log(json);
-    // console.log('Note add successfully');
-    // const note = {
-    //   _id: '63fb464f67e7ef9ac51d3c91',
-    //   user: '63f7c39ca28e0c788c0bbabc',
-    //   title,
-    //   description,
-    //   tag,
-    //   date: '2023-02-26T11:45:19.158Z',
-    //   __v: 0,
-    // };
     setNotes(notes.concat(json.saveNote));
+    showAlert('primary', json.msg);
   };
 
   // Delete a Note
-  const deleteNote = (id) => {
-    // TODO: API Call
+  const deleteNote = async (id) => {
+    // API Call
     console.log(`delete note ${id}`);
     // eslint-disable-next-line no-underscore-dangle
     const filterNote = notes.filter((note) => (note._id !== id));
     setNotes(filterNote);
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNmN2MzOWNhMjhlMGM3ODhjMGJiYWJjIn0sImlhdCI6MTY3NzI0NDU0MX0.G2u7ps24NDaSdq2KatF9zmxsqRcODhf-4n2nxUTtpbs',
+      },
+    });
+    const json = await response.json();
+    showAlert('danger', json.msg);
+    console.log(json);
   };
 
   // Add a Note
