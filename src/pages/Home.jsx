@@ -3,7 +3,7 @@ import Notes from '../components/Notes';
 
 function Home() {
   return (
-    <div className="my-3">
+    <div className="mt-4">
       <Notes />
     </div>
   );

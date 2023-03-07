@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import NoteContext from '../context/notes/NoteContext';
 
 function Navbar() {
   const { pathname } = useLocation();
-
+  const { showAlert } = useContext(NoteContext);
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    showAlert('danger', 'Logout Successfully');
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
       <div className="container-fluid">
@@ -21,8 +26,14 @@ function Navbar() {
             </li>
           </ul>
           <form className="d-flex">
-            <Link className="btn btn-primary mx-1" type="submit" to="/login">Login</Link>
-            <Link className="btn btn-primary" type="submit" to="/signup">Signup</Link>
+            {!localStorage.getItem('token') ? (
+              <>
+                <Link className="btn btn-primary mx-1" type="submit" to="/login">Login</Link>
+                <Link className="btn btn-primary" type="submit" to="/signup">Signup</Link>
+              </>
+            ) : (
+              <Link className="btn btn-primary mx-1" type="submit" to="/login" onClick={handleLogout}>Logout</Link>
+            )}
           </form>
         </div>
       </div>

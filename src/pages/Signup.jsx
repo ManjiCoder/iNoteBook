@@ -32,7 +32,7 @@ function Signup() {
       // Save the token and redirect
       Navigate('/');
       localStorage.setItem('token', json.authToken);
-      showAlert('primary', 'Account Create Successfully');
+      showAlert('warning', 'Account Create Successfully');
     } else {
       showAlert('danger', json.error);
     }

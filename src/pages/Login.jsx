@@ -28,6 +28,7 @@ function Login() {
       // Save the token and redirect
       Navigate('/');
       localStorage.setItem('token', json.authToken);
+      showAlert('warning', 'Login Successfully');
     } else {
       showAlert('danger', json.error);
     }
