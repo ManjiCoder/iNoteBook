@@ -76,6 +76,7 @@ router.post(
   ],
   // eslint-disable-next-line consistent-return
   async (req, res) => {
+    let success = false;
     // If there are errors, return Bad request & the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -96,7 +97,7 @@ router.post(
       if (!comparePassword) {
         return res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({ success, error: "Please try to login with correct credentials" });
       }
       // Creating AuthToken Using jsonwebtoken
       const data = {
@@ -105,8 +106,9 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
+      success = true;
       console.log({ data, authToken });
-      res.json({ authToken });
+      res.json({ success, authToken });
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Internal Server Error");
