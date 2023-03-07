@@ -34,7 +34,7 @@ function Login() {
     console.log(json);
   };
   return (
-    <div className="container">
+    <div className="container mt-5">
       <form onSubmit={handleLogin}>
         <div className="my-3">
           <label htmlFor="email" className="form-label">Email address</label>
@@ -45,7 +45,7 @@ function Login() {
           <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
           <input type="password" name="password" className="form-control" id="exampleInputPassword1" onChange={handleOnChange} value={credentials.password} />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" disabled={password.length < 5} className="btn btn-primary">Submit</button>
       </form>
     </div>
   );

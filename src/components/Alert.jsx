@@ -7,10 +7,10 @@ function Alert() {
   const { Alert } = useContext(NoteContext);
 
   return (
-    <div>
+    <div className="container py-3" style={{ height: '50px' }}>
       {Alert && (
       <div className={`alert alert-${Alert.type}`} role="alert">
-        {Alert.msg}
+        <strong>{Alert.msg}</strong>
       </div>
       )}
     </div>

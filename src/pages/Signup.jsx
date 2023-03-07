@@ -32,6 +32,7 @@ function Signup() {
       // Save the token and redirect
       Navigate('/');
       localStorage.setItem('token', json.authToken);
+      showAlert('primary', 'Account Create Successfully');
     } else {
       showAlert('danger', json.error);
     }
@@ -39,7 +40,7 @@ function Signup() {
   };
 
   return (
-    <div className="container">
+    <div className="container mt-5">
       <form onSubmit={handleSingup}>
         <div className="my-3">
           <label htmlFor="name" className="form-label">Name</label>
@@ -58,7 +59,7 @@ function Signup() {
           <label htmlFor="cpassword" className="form-label">Confrim Password</label>
           <input type="password" name="cpassword" className="form-control" id="cpassword" onChange={handleOnChange} value={cpassword} minLength={5} />
         </div>
-        <button type="submit" disabled={(password.length || cpassword.length) < 5} className="btn btn-primary">Submit</button>
+        <button type="submit" disabled={(password.length && cpassword.length) < 5} className="btn btn-primary">Submit</button>
       </form>
     </div>
   );
