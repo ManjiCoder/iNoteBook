@@ -13,6 +13,7 @@ function Notes() {
   const { notes, getNotes, editNote } = context;
   const Navigate = useNavigate();
   const ref = useRef(null);
+
   useEffect(() => {
     if (localStorage.getItem('token')) {
       getNotes();
