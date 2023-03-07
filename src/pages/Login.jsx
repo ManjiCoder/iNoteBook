@@ -34,18 +34,20 @@ function Login() {
     console.log(json);
   };
   return (
-    <form onSubmit={handleLogin}>
-      <div className="my-3">
-        <label htmlFor="email" className="form-label">Email address</label>
-        <input type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" onChange={handleOnChange} value={credentials.email} />
-        <div id="emailHelp" className="form-text">We&apos;ll never share your email with anyone else.</div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-        <input type="password" name="password" className="form-control" id="exampleInputPassword1" onChange={handleOnChange} value={credentials.password} />
-      </div>
-      <button type="submit" className="btn btn-primary">Submit</button>
-    </form>
+    <div className="container">
+      <form onSubmit={handleLogin}>
+        <div className="my-3">
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" onChange={handleOnChange} value={credentials.email} />
+          <div id="emailHelp" className="form-text">We&apos;ll never share your email with anyone else.</div>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+          <input type="password" name="password" className="form-control" id="exampleInputPassword1" onChange={handleOnChange} value={credentials.password} />
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+    </div>
   );
 }
 

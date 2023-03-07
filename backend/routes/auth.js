@@ -23,6 +23,7 @@ router.post(
   ],
   // eslint-disable-next-line consistent-return
   async (req, res) => {
+    let success = false;
     // If there are errors, return Bad request & the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -36,7 +37,7 @@ router.post(
       if (duplicateEmail) {
         return res
           .status(400)
-          .json({ error: "Sorry user with this email is already exists." });
+          .json({ success, error: "Sorry user with this email is already exists." });
       }
       // Hash Password & Adding Salt
       const salt = await bcrypt.genSalt(10);
@@ -58,7 +59,8 @@ router.post(
       const authToken = jwt.sign(data, JWT_SECRET);
       // res.json(newUser);
       console.log({ data, authToken });
-      res.json({ authToken });
+      success = true;
+      res.json({ success, authToken });
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Internal Server Error");
