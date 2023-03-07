@@ -66,7 +66,7 @@ function NoteState(props) {
     console.log(json);
   };
 
-  // Add a Note
+  // Edit a Note
   const editNote = async (id, title, description, tag) => {
     // API Call
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
